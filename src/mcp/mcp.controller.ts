@@ -15,7 +15,7 @@ export class MCPController {
   async patchContext(@Body() body: { userId: number; isActive: boolean }) {
     const { userId, isActive } = body;
     const user = await this.userService.updateUser(userId, { isActive });
-    return { udpated: user };
+    return { updated: user };
   }
 
   @Post("commands")
