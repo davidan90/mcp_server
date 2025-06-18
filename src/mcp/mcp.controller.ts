@@ -20,7 +20,7 @@ export class MCPController {
 
   @Post("commands")
   async runCommand(@Body() body: { command: string; args: any }) {
-    if (body.command === "desactivarUsuario") {
+    if (body.command === "deactivateUser") {
       const user = await this.userService.updateUser(body.args.userId, {
         isActive: false,
       });

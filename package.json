@@ -9,7 +9,10 @@
     "start": "node dist/main.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prisma:seed": "npx ts-node prisma/seed.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mcpconnector:execute:gemini": "npx ts-node connectors/gemini-mcp.ts",
+    "mcpconnector:execute:openai": "npx ts-node connectors/openai-mcp.ts"
   },
   "repository": {
     "type": "git",
@@ -22,10 +25,14 @@
   },
   "homepage": "https://github.com/davidan90/mcp_server#readme",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@nestjs/common": "^11.1.3",
     "@nestjs/core": "^11.1.3",
     "@nestjs/platform-express": "^11.1.3",
-    "@prisma/client": "^6.10.0"
+    "@prisma/client": "^6.10.0",
+    "dotenv": "^16.5.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^5.5.1"
   },
   "devDependencies": {
     "@types/node": "^24.0.3",

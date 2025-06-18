@@ -2,12 +2,16 @@
 
 Proof of concept of an MCP (Model Context Protocol) server built with **NestJS**, **Prisma**, and **SQLite**. It allows retrieving and modifying the context of the `User` model via commands.
 
+Includes an AI connector to OpenAI and Gemini LLMs to trigger commands programmatically.
+
 ---
 
 ## 🚀 Technologies Used
 - [NestJS](https://nestjs.com/)
 - [Prisma ORM](https://www.prisma.io/)
 - [SQLite](https://www.sqlite.org/)
+- [OpenAI GPT-4 API](https://platform.openai.com/docs)
+- [Gemini API (Google AI)](https://ai.google.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 
 ---
@@ -23,6 +27,8 @@ npm install
 ### 1. Create `.env` file
 ```env
 DATABASE_URL="file:./dev.db"
+OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=AIza...
 ```
 
 ### 2. Generate the database
@@ -33,7 +39,9 @@ npx prisma migrate dev --name init
 ---
 
 ## 🧪 Sample Seed (optional)
-You can populate sample data by creating a `prisma/seed.ts` script.
+```bash
+npx ts-node prisma/seed.ts
+```
 
 ---
 
@@ -63,23 +71,40 @@ npm run prisma:migrate    # Run database migrations
 `POST /mcp/commands`
 ```json
 {
-  "command": "desactivarUsuario",
+  "command": "deactivateUser",
   "args": { "userId": 1 }
 }
 ```
 
 ---
 
+## 🤖 LLM Connectors
+
+### OpenAI (GPT-4 + functions)
+```bash
+npx ts-node connectors/openai-mcp.ts
+```
+> Sends a user message to GPT-4 and calls MCP commands automatically if needed.
+
+### Gemini (Google AI)
+```bash
+npx ts-node connectors/gemini-mcp.ts
+```
+> Uses Gemini 1.5 Flash to generate tool calls and execute MCP actions.
+
+---
+
 ## 📁 Project Structure
 ```
-src/
-├── mcp/           # MCP logic (context and commands)
-├── user/          # User service
-├── main.ts        # Application entry point
-
-prisma/
-├── schema.prisma  # DB model and configuration
+mcp-server/
+├── src/              # NestJS backend
+├── prisma/           # Prisma schema & seeds
+├── connectors/       # AI-based external clients
+├── .env              # API keys and DB
+├── package.json
 ```
 
+---
+
 ## 📬 Contact
-This project is a proof of concept. It can be easily extended to include more models, command logic, WebSocket support, and more.
+This project is a proof of concept and ready to be expanded with more tools, validation layers, and LLM functions.
